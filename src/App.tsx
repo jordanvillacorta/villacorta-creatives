@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Menu, X, Github, Linkedin, Mail, Code2 } from 'lucide-react';
-import { ThemeToggle } from './components/ThemeToggle';
+import { Menu, X, Github, Linkedin, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ImageWithFallback } from './components/ImageWithFallback';
 import Home from './pages/Home';
 import About from './pages/About';
 import Gallery from './pages/Gallery';
@@ -18,10 +19,12 @@ function App() {
             <div className="flex justify-between h-16">
               <div className="flex items-center">
                 <Link to="/" className="flex items-center space-x-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1690150176816-1441f8240437?auto=format&fit=crop&q=80&w=200"
+                  <ImageWithFallback
+                    src="https://github.com/jordanvillacorta/villacorta-creatives/blob/master/images/VC_Design.png?raw=true"
                     alt="Villacorta Creatives"
-                    className="h-12 w-12 object-contain"
+                    className="h-16 w-auto object-contain py-2"
+                    width={64}
+                    height={64}
                   />
                 </Link>
               </div>
@@ -46,7 +49,7 @@ function App() {
                      className="text-primary-400 hover:text-primary-300 transition-colors">
                     <Linkedin className="h-5 w-5" />
                   </a>
-                  <a href="mailto:jordan.villacorta@gmail.com"
+                  <a href="mailto:villacortacreatives@gmail.com"
                      className="text-primary-400 hover:text-primary-300 transition-colors">
                     <Mail className="h-5 w-5" />
                   </a>
@@ -66,41 +69,61 @@ function App() {
           </div>
 
           {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden bg-[#f4f9ff]/80 backdrop-blur-sm">
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-primary-100/20">
-                <Link to="/" 
-                      className="block px-3 py-2 text-primary-400 hover:text-primary-300 transition-colors"
-                      onClick={() => setIsMenuOpen(false)}>
-                  Home
-                </Link>
-                <Link to="/about"
-                      className="block px-3 py-2 text-primary-400 hover:text-primary-300 transition-colors"
-                      onClick={() => setIsMenuOpen(false)}>
-                  About Me
-                </Link>
-                <Link to="/gallery"
-                      className="block px-3 py-2 text-primary-400 hover:text-primary-300 transition-colors"
-                      onClick={() => setIsMenuOpen(false)}>
-                  Project Gallery
-                </Link>
-                <div className="flex space-x-4 px-3 py-2">
-                  <a href="https://github.com/jordanvillacorta" target="_blank" rel="noopener noreferrer" 
-                     className="text-primary-400 hover:text-primary-300 transition-colors">
-                    <Github className="h-5 w-5" />
-                  </a>
-                  <a href="https://www.linkedin.com/in/jordan-villacorta/" target="_blank" rel="noopener noreferrer"
-                     className="text-primary-400 hover:text-primary-300 transition-colors">
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a href="mailto:jordan.villacorta@gmail.com"
-                     className="text-primary-400 hover:text-primary-300 transition-colors">
-                    <Mail className="h-5 w-5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="md:hidden bg-[#f4f9ff]/80 backdrop-blur-sm overflow-hidden"
+              >
+                <motion.div 
+                  className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-primary-100/20"
+                >
+                  {[
+                    { to: "/", label: "Home" },
+                    { to: "/about", label: "About Me" },
+                    { to: "/gallery", label: "Project Gallery" }
+                  ].map((link, index) => (
+                    <motion.div
+                      key={link.to}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Link
+                        to={link.to}
+                        className="block px-3 py-2 text-primary-400 hover:text-primary-300 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="flex space-x-4 px-3 py-2"
+                  >
+                    <a href="https://github.com/jordanvillacorta" target="_blank" rel="noopener noreferrer" 
+                       className="text-primary-400 hover:text-primary-300 transition-colors">
+                      <Github className="h-5 w-5" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/jordan-villacorta/" target="_blank" rel="noopener noreferrer"
+                       className="text-primary-400 hover:text-primary-300 transition-colors">
+                      <Linkedin className="h-5 w-5" />
+                    </a>
+                    <a href="mailto:jordan.villacorta@gmail.com"
+                       className="text-primary-400 hover:text-primary-300 transition-colors">
+                      <Mail className="h-5 w-5" />
+                    </a>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
 
         {/* Main Content */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, Clock } from 'lucide-react';
+import { ImageWithFallback } from '../components/ImageWithFallback';
 
 const projects = [
   {
@@ -8,7 +9,7 @@ const projects = [
     description:
       'A dynamic platform for leadership development and community empowerment',
     image:
-      'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+      'https://github.com/jordanvillacorta/villacorta-creatives/blob/master/images/power_giving.png?raw=true',
     tags: ['Typescript', 'Tailwind CSS', 'React'],
     liveUrl: 'https://powergivingleader.net/',
     githubUrl: 'https://github.com/jordanvillacorta/power-giving-leader',
@@ -18,7 +19,7 @@ const projects = [
     description:
       'Modern barbershop website with online booking and service showcase',
     image:
-      'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80',
+      'https://github.com/jordanvillacorta/villacorta-creatives/blob/master/images/pedro_shop.png?raw=true',
     tags: ['React', 'Tailwind CSS', 'Booksy Integrated'],
     liveUrl: 'https://pedros-barbershop.netlify.app/',
     githubUrl: 'https://github.com/jordanvillacorta/pedros-barbershop',
@@ -27,7 +28,7 @@ const projects = [
     title: 'Brewstronomy',
     description: 'Discover and explore local craft coffee shops around you',
     image:
-      'https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&q=80',
+      'https://github.com/jordanvillacorta/villacorta-creatives/blob/master/images/brewstronomy.png?raw=true',
     tags: ['React', 'Tailwind CSS', 'API Integration'],
     liveUrl: 'https://brewstronomy.netlify.app',
     githubUrl: 'https://github.com/jordanvillacorta/starbrew-crew-web',
@@ -48,7 +49,7 @@ function Gallery() {
             <h1 className="text-4xl font-bold text-[#f4f9ff] mb-4">
               Project Gallery
             </h1>
-            <p className="text-lg md:text-xl text-[#f4f9ff]/80">
+           <p className="text-lg md:text-xl text-[#f4f9ff]/80 font-lora">
               A showcase of my professional work and side projects
             </p>
           </div>
@@ -58,15 +59,18 @@ function Gallery() {
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 className="bg-[#f4f9ff]/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative group">
-                  <img
+                  <ImageWithFallback
                     src={project.image}
                     alt={project.title}
                     className="w-full h-48 object-cover"
+                    width={400}
+                    height={300}
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
                     <a
@@ -107,12 +111,15 @@ function Gallery() {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag, tagIndex) => (
-                      <span
+                      <motion.span
                         key={tagIndex}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
                         className="px-3 py-1 bg-primary-100/20 text-primary-400 rounded-full text-sm"
                       >
                         {tag}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </div>
