@@ -3,6 +3,10 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Open Sans', 'sans-serif'],
+        lora: ['Lora', 'serif'],
+      },
       colors: {
         primary: {
           100: '#7BB7D5', // Lightest blue

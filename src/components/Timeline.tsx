@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { timeline } from '../data/timeline';
+import { ImageWithFallback } from './ImageWithFallback';
 
 export function Timeline() {
   const [selectedMilestone, setSelectedMilestone] = useState<number | null>(null);
@@ -44,12 +45,27 @@ export function Timeline() {
                 <motion.div 
                   className="pl-20 md:pl-0 md:mt-12 md:mx-4"
                   whileHover={{ y: -5 }}
-                  onHoverStart={() => handleMilestoneInteraction(milestone.id)}
-                  onHoverEnd={() => handleMilestoneInteraction(null)}
+                  variants={{
+                    hover: { y: -5 }
+                  }}
+                  initial={{ opacity: 0, x: 100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  onHoverStart={(e) => {
+                    if (window.innerWidth >= 768) {
+                      handleMilestoneInteraction(milestone.id);
+                    }
+                  }}
+                  onHoverEnd={(e) => {
+                    if (window.innerWidth >= 768) {
+                      handleMilestoneInteraction(null);
+                    }
+                  }}
                 >
                   <motion.div 
                     className={`bg-[#f4f9ff]/80 backdrop-blur-sm p-4 md:p-6 rounded-lg shadow-lg transition-all duration-300 min-h-[240px] md:min-h-[280px] flex flex-col items-center text-center ${
-                      selectedMilestone === milestone.id || hoveredMilestone === milestone.id
+                      (window.innerWidth >= 768 && (selectedMilestone === milestone.id || hoveredMilestone === milestone.id))
                         ? 'shadow-2xl ring-2 ring-primary-300'
                         : ''
                     }`}
@@ -57,7 +73,7 @@ export function Timeline() {
                     <motion.div 
                      className="text-primary-300 font-bold mb-4 mt-2"
                       animate={{
-                        scale: selectedMilestone === milestone.id || hoveredMilestone === milestone.id ? 1.1 : 1
+                        scale: (window.innerWidth >= 768 && (selectedMilestone === milestone.id || hoveredMilestone === milestone.id)) ? 1.1 : 1
                       }}
                       transition={{ duration: 0.3 }}
                     >
@@ -69,15 +85,15 @@ export function Timeline() {
                         <AnimatePresence>
                           {(selectedMilestone === milestone.id || hoveredMilestone === milestone.id) && (
                             <div className="relative">
-                              <motion.img
+                              <motion.div>
+                                <ImageWithFallback
                                 src={milestone.image}
                                 alt={milestone.title}
                                 className="w-full h-full object-cover"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 20 }}
-                                transition={{ duration: 0.3 }}
+                                width={400}
+                                height={300}
                               />
+                              </motion.div>
                               <div className="absolute inset-0 bg-gradient-to-t from-primary-500/20 to-transparent"></div>
                             </div>
                           )}
