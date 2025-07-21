@@ -19,9 +19,9 @@ const projects = [
     description:
       'Modern barbershop website with online booking and service showcase',
     image:
-      'https://github.com/jordanvillacorta/villacorta-creatives/blob/master/images/pedro_shop.png?raw=true',
+      'https://github.com/jordanvillacorta/villacorta-creatives/blob/master/images/pedros_barbershop.png?raw=true',
     tags: ['React', 'Tailwind CSS', 'Booksy Integrated'],
-    liveUrl: 'https://pedros-barbershop.netlify.app/',
+    liveUrl: 'https://pedrosbarbershop.com/',
     githubUrl: 'https://github.com/jordanvillacorta/pedros-barbershop',
   },
   {
@@ -32,6 +32,16 @@ const projects = [
     tags: ['React', 'Tailwind CSS', 'API Integration'],
     liveUrl: 'https://brewstronomy.netlify.app',
     githubUrl: 'https://github.com/jordanvillacorta/starbrew-crew-web',
+    status: 'In Progress',
+  },
+  {
+    title: 'Mahalo Mornings',
+    description: 'A local Hawaiian-inspired pastry and bakery shop in Lenexa, Kansas',
+    image:
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80',
+    tags: ['React', 'Typescript', 'Supabase'],
+    liveUrl: 'https://www.mahalomornings.com',
+    githubUrl: 'https://github.com/jordanvillacorta/mahalo-mornings',
     status: 'In Progress',
   },
 ];
@@ -49,7 +59,7 @@ function Gallery() {
             <h1 className="text-4xl font-bold text-[#f4f9ff] mb-4">
               Project Gallery
             </h1>
-           <p className="text-lg md:text-xl text-[#f4f9ff]/80 font-lora">
+            <p className="text-lg md:text-xl text-[#f4f9ff]/80 font-lora">
               A showcase of my professional work and side projects
             </p>
           </div>
